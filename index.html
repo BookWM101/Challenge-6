@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simple Weather App</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/style.css">
+</head>
+
+<body>
+  <div class="container mt-5 bg-primary">
+    <div class="row">
+      <div class="col-12 text-center mb-4">
+        <h1>Simple Weather App</h1>
+      </div>
+    </div>
+    <div class="row">
+      <!-- Search Div -->
+      <div class="col-md-4">
+        <div class="card p-3">
+          <input type="text" id="city-search" class="form-control mb-3" placeholder="Search for a city">
+          <ul id="city-suggestions" class="list-group mb-3"></ul>
+          <button class="btn btn-primary w-100 mb-3" onclick="searchWeather()">Search</button>
+          <h5 class="text-center">Past Searches</h5>
+          <ul id="past-searches" class="list-group"></ul>
+        </div>
+      </div>
+      <!-- Weather Display Div -->
+      <div class="col-md-8">
+        <div id="current-weather" class="card p-3 mb-3"></div>
+        <h3 class="text-center">5-Day Forecast</h3>
+        <div id="forecast" class="row"></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="/assets/script.js"></script>
+</body>
+
+</html>
+
+
