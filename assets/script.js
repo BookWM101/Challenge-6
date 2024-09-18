@@ -2,11 +2,13 @@ const apiKey = 'd76933b52f41752e0f5be0c571be99cd';
 let pastSearches = [];
 
 function searchWeather() {
-  const city = document.getElementById("city-search").value;
+  const city = document.getElementById("city-search").value.trim();
   if (city) {
     fetchWeather(city);
     addToPastSearches(city);
     console.log("Added city to history!");
+  } else {
+    alert("Please enter a city.");
   }
 }
 
@@ -20,8 +22,8 @@ function fetchWeather(city) {
       console.log("Fetched city!");
     })
     .catch(error => {
-      alert("City not found!");
-      console.log("Couldn't find city!");
+      console.error("Error fetching weather:", error);
+      alert("City not found or there was an error fetching the weather data.");
     });
 }
 
@@ -32,6 +34,9 @@ function fetchForecast(city) {
       const forecastData = response.data;
       displayForecast(forecastData);
       console.log("Fetched forecast!");
+    })
+    .catch(error => {
+      console.error("Error fetching forecast:", error);
     });
 }
 
@@ -86,22 +91,31 @@ function addToPastSearches(city) {
 }
 
 function savePastSearches() {
-  localStorage.setItem("pastSearches", JSON.stringify(pastSearches));
-  console.log("Saved past city to local storage!");
+  try {
+    localStorage.setItem("pastSearches", JSON.stringify(pastSearches));
+    console.log("Saved past city to local storage!");
+  } catch (error) {
+    console.error("Error saving past searches:", error);
+  }
 }
 
 function loadPastSearches() {
-  const storedSearches = JSON.parse(localStorage.getItem("pastSearches"));
-  if (storedSearches) {
-    pastSearches = storedSearches;
-    const pastSearchesElement = document.getElementById("past-searches");
-    pastSearches.forEach(city => {
-      pastSearchesElement.innerHTML += `<li class="list-group-item" onclick="fetchWeather('${city}')">${city}</li>`;
-    });
-    console.log("Loaded past cities!");
+  try {
+    const storedSearches = JSON.parse(localStorage.getItem("pastSearches"));
+    if (storedSearches) {
+      pastSearches = storedSearches;
+      const pastSearchesElement = document.getElementById("past-searches");
+      pastSearches.forEach(city => {
+        pastSearchesElement.innerHTML += `<li class="list-group-item" onclick="fetchWeather('${city}')">${city}</li>`;
+      });
+      console.log("Loaded past cities!");
+    }
+  } catch (error) {
+    console.error("Error loading past searches:", error);
   }
 }
 
 // Loads past searches on page load
 window.onload = loadPastSearches;
+
 
